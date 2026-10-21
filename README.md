@@ -26,15 +26,24 @@ The uploaded `Noble Distributions` promotional flyer was not present in the supp
 
 The original uploaded product photographs are kept in `public/images/`. The site uses optimized copies in `public/images/optimized/` so the original photos remain untouched.
 
-## Commit and push to GitHub
+## Deploy to Render
 
-This project folder was supplied without a `.git` directory, so it is not currently a clone of the GitHub repository. The linked GitHub repository currently has no commits. To initialize this folder and push the first version, open PowerShell here and run:
+This repository includes a Render Blueprint in `render.yaml` and pins Node.js using `.node-version`. Render uses the Blueprint to deploy the Vite production build as a static site:
 
-```powershell
-git init
-git branch -M main
-git remote add origin https://github.com/Cynthia35/Thotho-s-Juice-Ice-pops.git
-git add .
-git commit -m "Build Thotho's Juice & Ice Pops website"
-git push -u origin main
-```
+| Render setting | Value |
+| --- | --- |
+| Service type | Static site |
+| Build command | `npm ci && npm run build` |
+| Publish directory | `./dist` |
+| Branch | `main` |
+
+### Create the site
+
+1. Push the project, including `render.yaml` and `.node-version`, to the `main` branch of the GitHub repository.
+2. Sign in to the [Render Dashboard](https://dashboard.render.com/) and select **New > Blueprint**.
+3. Connect the `Cynthia35/Thotho-s-Juice-Ice-pops` GitHub repository and create the Blueprint.
+4. Render reads `render.yaml`, builds the site, and provides its published `onrender.com` URL.
+
+Alternatively, select **New > Static Site** and connect the repository. Use the build command and publish directory shown above. Subsequent pushes to the connected branch trigger a new deployment.
+
+The site is a static, single-page frontend and does not require a server process, database, environment variables, or a separate start command.
